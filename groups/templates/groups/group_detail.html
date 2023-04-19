@@ -17,7 +17,7 @@
 			class="glyphicon glyphicon-ok-circle"></span> Join</a>
 	{% endif %}
 
-	{% if user is group.creator %}
+	{% if user.is_authenticated and user == group.creator %}
 	<a href="{% url 'groups:delete' slug=group.slug %}" class="btn btn-lg btn-fill btn-delete"><span
 			class="glyphicon glyphicon-remove-circle"></span> Delete Group</a>
 	{% endif %}
