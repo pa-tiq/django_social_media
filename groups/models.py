@@ -19,6 +19,7 @@ register = template.Library()
 
 
 class Group(models.Model):
+    creator = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(allow_unicode=True, unique=True)
     description = models.TextField(blank=True, default="")

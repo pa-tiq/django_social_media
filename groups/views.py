@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from django.views import generic
@@ -12,6 +12,17 @@ from . import models
 class CreateGroup(LoginRequiredMixin, generic.CreateView):
     fields = ("name", "description")
     model = Group
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
+class DeleteGroup(LoginRequiredMixin, generic.DeleteView):
+    model = Group
+    success_url = reverse_lazy("groups:all")
 
 
 class SingleGroup(generic.DetailView):
