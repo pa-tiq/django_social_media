@@ -130,7 +130,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-LOGIN_REDIRECT_URL = "test"
+LOGIN_REDIRECT_URL = "posts:all"
 LOGOUT_REDIRECT_URL = "thanks"
 
 # Default primary key field type

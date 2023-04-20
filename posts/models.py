@@ -15,7 +15,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, related_name="posts", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
     message = models.TextField()
-    message_html = models.TextField(editable=False)
+    message_html = models.TextField(editable=True)
     group = models.ForeignKey(
         Group, related_name="posts", null=True, blank=True, on_delete=models.CASCADE
     )
@@ -34,4 +34,4 @@ class Post(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-        unique_together = ["user", "message"]
+        # unique_together = ["user", "message"]

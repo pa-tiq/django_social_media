@@ -14,4 +14,5 @@ urlpatterns = [
         name="single",
     ),
     re_path(r"delete/(?P<pk>\d+)/$", views.DeletePost.as_view(), name="delete"),
+    re_path(r"update/(?P<pk>\d+)/$", views.UpdatePost.as_view(), name="update"),
 ]

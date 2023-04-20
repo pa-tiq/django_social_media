@@ -1,15 +1,21 @@
 {% extends "posts/post_base.html" %}
-{% load humanize %}
+{% comment %} {% load humanize %} {% endcomment %}
 
-{% block pre_post_content %}
+{% block prepost %}
+
 <div class="col-md-4">
 	{% if request.user.is_authenticated %}
+	<h2>
+		Welcome back,<a href="{% url 'posts:for_user' username=user.username %}">@{{user.username}}</a>!
+	</h2>
+	<a href="{% url 'posts:create' %}" class="btn btn-md btn-fill btn-warning"><span
+			class="glyphicon glyphicon-plus-sign"></span> Create New Post</a>
 	<div class="card card-with-shadow">
-		<div class="content">
-			<h5 class="title">Your Groups</h5>
-			<ul class="list-unstyled">
+		<h5 class="title">Your Groups</h5>
+		<div class="col-md-8">
+			<ul class="list-group">
 				{# {% get_user_groups as user_groups %}#}
-				{% for member_group in get_user_groups %}
+				{% for member_group in user.user_groups.all %}
 				<li class="group li-with-bullet">
 					<a href="{% url 'groups:single' slug=member_group.group.slug %}">{{ member_group.group.name }}</a>
 				</li>
@@ -19,27 +25,26 @@
 		</div>
 	</div>
 	{% endif %}
-	<div class="card card-with-shadow">
+	{% comment %} <div class="card card-with-shadow">
 		<div class="content">
 			<h5 class="title">All groups</h5>
 			<ul class="list-unstyled">
 				{# {% get_other_groups as other_groups %}#}
 				{% for other_group in get_other_groups %}
-					<li class="group li-with-bullet"><a href="{% url 'groups:single' slug=other_group.slug %}">{{ other_group.name }}</a></li>
+				<li class="group li-with-bullet"><a
+						href="{% url 'groups:single' slug=other_group.slug %}">{{ other_group.name }}</a></li>
 				{% endfor %}
 			</ul>
-			
-
-
-
 		</div>
-	</div>
+	</div> {% endcomment %}
 </div>
 {% endblock %}
 {% block post_content %}
+
 <div class="col-md-8">
+	<h3>Posts</h3>
 	{% for post in post_list %}
-  {% include "posts/_post.html" %}
+	{% include "posts/_post.html" %}
 	{% endfor %}
 </div>
 {% endblock %}

@@ -17,6 +17,7 @@ User = get_user_model()
 
 class PostList(SelectRelatedMixin, generic.ListView):
     model = models.Post
+    template_name = "posts/post_list.html"
     select_related = ("user", "group")
 
 
@@ -78,3 +79,10 @@ class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
     def delete(self, *args, **kwargs):
         messages.success(self.request, "Post Deleted")
         return super().delete(*args, **kwargs)
+
+
+class UpdatePost(LoginRequiredMixin, generic.UpdateView):
+    # login_url = "accounts/login"
+    # redirect_field_name = "posts/post_detail.html"
+    form_class = forms.PostForm
+    model = models.Post
